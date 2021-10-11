@@ -1,0 +1,44 @@
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: azdevops
+# data:
+#   AZP_TOKEN: 
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azdevops-deployment-once
+  labels:
+    app: azdevops-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azdevops-agent
+  template:
+    metadata:
+      labels:
+        app: azdevops-agent
+    spec:
+      containers:
+      - name: azdevops-agent
+        image: devopsconf.azurecr.io/dockeragent
+        args: ["--once"]
+        env:
+          - name: AZP_URL
+            value: "https://dev.azure.com/giorgiolasala"
+          - name: AZP_POOL
+            value: "AKS"
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_TOKEN
+      #   volumeMounts:
+      #   - mountPath: /var/run/docker.sock
+      #     name: docker-volume
+      # volumes:
+      # - name: docker-volume
+      #   hostPath:
+      #     path: /var/run/docker.sock

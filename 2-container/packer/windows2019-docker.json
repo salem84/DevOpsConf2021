@@ -1,0 +1,66 @@
+{
+    "variables": {
+        "root_folder": "C:",
+        "toolset_json_path": "{{env `TEMP`}}\\toolset.json",
+        "image_folder": "C:\\image",
+        "commit_file": "C:\\image\\commit.txt",
+        "imagedata_file": "C:\\imagedata.json",
+        "metadata_file": "C:\\image\\metadata.txt",
+        "scripts_folder": "C:\\scripts",
+        "helper_script_folder": "C:\\Program Files\\WindowsPowerShell\\Modules\\",
+        "commit_id": "LATEST",
+        "install_user": "installer",
+        "install_password": "$Password2020",
+        "capture_name_prefix": "packer",
+        "image_version": "dev",
+        "image_os": "win19"
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "image": "mcr.microsoft.com/dotnet/framework/aspnet:4.8-20200512-windowsservercore-ltsc2019",
+            "container_dir": "c:/app",
+            "windows_container": true,
+            "commit": true
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "inline": [
+                "echo ciao > c:/out.txt"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "{{ template_dir }}/scripts/",
+            "destination": "{{user `scripts_folder`}}"
+        },
+        {
+            "type": "powershell",
+            "inline": [
+                "cp '{{user `scripts_folder`}}/ImageHelpers' '{{user `helper_script_folder`}}' -Recurse"
+            ]
+        },
+        {
+            "type": "powershell",
+            "valid_exit_codes": [
+                0,
+                3010
+            ],
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Install-VS2019-Community-Light.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "valid_exit_codes": [
+                0,
+                3010
+            ],
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Install-NET472.ps1"
+            ]
+        }
+    ]
+}
