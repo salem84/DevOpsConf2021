@@ -49,4 +49,14 @@ az vmss create \
 --platform-fault-domain-count 1 \
 --load-balancer "" 
 
+# With Cloud-init
+az vmss create \
+  --resource-group RG_DevOpsConf \
+  --name vmssagentspool-linuxci \
+  --image UbuntuLTS \
+  --vm-sku Standard_DS2_v2 \
+  --upgrade-policy-mode manual \
+  --custom-data cloud-init.txt \
+  --authentication-type password \
+  --instance-count 1 
 
