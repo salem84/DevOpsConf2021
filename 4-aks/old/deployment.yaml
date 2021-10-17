@@ -3,8 +3,8 @@ kind: Secret
 metadata:
   name: azdevops
 data:
-  #AZP_TOKEN: 
-  AZP_TOKEN: ==
+  #AZP_TOKEN: 62cyhg355nzykymiefzc6ghoknqyet7mfc7hvrkcqx67wbyjtzea
+  AZP_TOKEN: NjJjeWhnMzU1bnp5a3ltaWVmemM2Z2hva25xeWV0N21mYzdodnJrY3F4Njd3YnlqdHplYQ==
 ---
 apiVersion: apps/v1
 kind: Deployment

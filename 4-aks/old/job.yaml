@@ -16,7 +16,7 @@ spec:
           - name: AZP_URL
             value: "https://dev.azure.com/giorgiolasala"
           - name: AZP_TOKEN
-            value: ""
+            value: "62cyhg355nzykymiefzc6ghoknqyet7mfc7hvrkcqx67wbyjtzea"
           - name: AZP_POOL
             value: "AKS"
           volumeMounts:

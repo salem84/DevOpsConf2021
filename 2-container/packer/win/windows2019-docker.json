@@ -26,12 +26,6 @@
     ],
     "provisioners": [
         {
-            "type": "powershell",
-            "inline": [
-                "echo ciao > c:/out.txt"
-            ]
-        },
-        {
             "type": "file",
             "source": "{{ template_dir }}/scripts/",
             "destination": "{{user `scripts_folder`}}"
